@@ -23,5 +23,5 @@ custom.data.type.gvk.config.parameter.schema.database.value.label,Eigene Datenba
 custom.data.type.gvk.config.parameter.mask.database_overwrite.value.label,Eigene Datenbanken (|-separiert) - Wert aus Schema überschreiben,Custom databases (|-seperated) - overwrite value from schema
 custom.data.type.gvk.setting.schema.no_database,Ohne Datenbank,Without database
 custom.data.type.gnd.modal.form.text.database,Datenbank,Database
-server.config.name.system.update_interval_gvk,GVK-Update-Einstellungen,k10plus-Update-Settings
-server.config.parameter.system.update_interval_gvk.days.label,Tage zwischen Updates,Days between updates
+server.config.name.system.update_interval_k10plus,k10plus-Update-Einstellungen,k10plus-Update-Settings
+server.config.parameter.system.update_interval_k10plus.days.label,Tage zwischen Updates,Days between updates
