@@ -29,8 +29,8 @@ Github has an overview page to get a list of [all releases](https://github.com/p
 As defined in `manifest.master.yml` this datatype can be configured:
 
 * schema config
-     * database
-        * example: "K10plus-Katalogisierungsdatenbank=k10plus|MEDLINE=medline|"
+   * database
+       * example: "K10plus-Katalogisierungsdatenbank=k10plus|MEDLINE=medline|"
 
 * mask config
     * database_overwrite
