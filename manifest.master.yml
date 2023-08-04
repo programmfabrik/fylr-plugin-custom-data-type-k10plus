@@ -1,0 +1,70 @@
+plugin:
+  name: custom-data-type-gvk
+  version: 2.1
+  url: https://github.com/programmfabrik/fylr-plugin-custom-data-type-k10plus
+  displayname:
+    de-DE: k10plus-Verknüpfung
+    en-US: k10plus-Referencing
+  info:
+    de-DE: Stellt Verknüpfungen mit dem k10plus-Verbundkatalog her.
+    en-US: Use for references to entities of the k10plus-Verbundkatalog her.
+  l10n: l10n/customDataTypek10plus.csv
+  webfrontend:
+    url: customDataTypek10plus.js
+    css: customDataTypek10plus.css
+
+base_url_prefix: "webfrontend"
+
+custom_types:
+  gvk:
+    mapping:
+      conceptName:
+        type: text
+      conceptURI:
+        type: text
+      conceptSource:
+        type: text
+      conceptAncestors:
+        type: text
+      facetTerm:
+        type: text_l10n
+    config:
+      schema:
+        - name: database
+          parameters:
+            value:
+              type: text
+      mask:
+        - name: database_overwrite
+          parameters:
+            value:
+              type: text
+              
+    update:
+      exec:
+        service: "node"
+        commands:
+          - prog: "node"
+            stdin:
+              type: body
+            stdout:
+              type: body
+            args:
+              - type: "value"
+                value: "%_exec.pluginDir%/updater/k10plusUpdater.js"
+              - type: "value"
+                value: "%info.json%"
+      timeout: 60
+      batch_size: 1
+      expires_days: 1
+      interval_base_config: update_interval_k10plus.days
+
+base_config:
+  - name: update_interval_k10plus
+    group: update_custom_data_type
+    parameters:
+      days:
+        type: int
+        min: 0
+        default: 0
+        position: 0

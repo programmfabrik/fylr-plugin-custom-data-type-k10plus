@@ -1,0 +1,7 @@
+build-info.json
+build-stamp-*
+build
+*~
+*.coffee.js
+*.spec.coffee
+.idea
