@@ -7,6 +7,7 @@ developers.
 # fylr-plugin-custom-data-type-k10plus
 
 This is a plugin for [fylr](https://docs.fylr.io/) with Custom Data Type `CustomDataTypek10plus` for references to entities of the [Gemeinsame Datenbank k10plus](https://kxp.k10plus.de/).
+
 ⚠️ For easydb5-instances use [easydb-custom-data-type-gvk](https://github.com/programmfabrik/easydb-custom-data-type-gvk).
 
 The Plugins uses <https://ws.gbv.de/suggest/csl2/> for the autocomplete-suggestions.
@@ -40,6 +41,8 @@ As defined in `manifest.master.yml` this datatype can be configured:
     * Preferred label of the linked record
 * conceptURI
     * URI to linked record
+* conceptSource
+    * database-notation 
 * _fulltext
     * easydb-fulltext
 * _standard
