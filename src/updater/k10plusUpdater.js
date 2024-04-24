@@ -7,6 +7,14 @@ const fetch = (...args) => import('node-fetch').then(({
 let databaseLanguages = [];
 let frontendLanguages = [];
 
+let info = {}
+
+let access_token = '';
+
+if (process.argv.length >= 3) {
+    info = JSON.parse(process.argv[2]);
+}
+
 function hasChanges(objectOne, objectTwo) {
   var len;
   const ref = ["conceptName", "conceptURI", "conceptSource", "_standard", "_fulltext", "facetTerm", "frontendLanguage"];
@@ -17,6 +25,28 @@ function hasChanges(objectOne, objectTwo) {
     }
   }
   return false;
+}
+
+function getConfigFromAPI() {
+        return new Promise((resolve, reject) => {
+                var url = 'http://fylr.localhost:8081/api/v1/config?access_token=' + access_token
+                fetch(url, {
+                                headers: {
+                                        'Accept': 'application/json'
+                                },
+                        })
+                        .then(response => {
+                                if (response.ok) {
+                                        resolve(response.json());
+                                } else {
+                                        console.error("Getty-Updater: Fehler bei der Anfrage an /config ");
+                                }
+                        })
+                        .catch(error => {
+                                console.error(error);
+                                console.error("Getty-Updater: Fehler bei der Anfrage an /config");
+                        });
+        });
 }
 
 main = (payload) => {
@@ -186,61 +216,71 @@ outputErr = (err2) => {
 
   process.stdin.setEncoding('utf8');
 
-  ////////////////////////////////////////////////////////////////////////////
-  // get config and read the languages
-  ////////////////////////////////////////////////////////////////////////////
+  access_token = info && info.plugin_user_access_token;
 
-  let config = JSON.parse(process.argv[2]);
+  if(access_token) {
+    
+      ////////////////////////////////////////////////////////////////////////////
+      // get config and read the languages
+      ////////////////////////////////////////////////////////////////////////////
 
-  // database-languages
-  databaseLanguages = config.config.system.config.languages.database;
-  databaseLanguages = databaseLanguages.map((value, key, array) => {
-    return value.value;
-  });
+      getConfigFromAPI().then(config => {
+          databaseLanguages = config.system.config.languages.database;
+          databaseLanguages = databaseLanguages.map((value, key, array) => {
+            return value.value;
+          });
 
-  // frontend-languages
-  frontendLanguages = config.config.system.config.languages.frontend;
+          frontendLanguages = config.system.config.languages.frontend;
 
-  ////////////////////////////////////////////////////////////////////////////
-  // availabilityCheck for k10plus-api
-  ////////////////////////////////////////////////////////////////////////////
-  let testURL = 'https://ws.gbv.de/suggest/csl2?query=pica.tit=Nacht&citationstyle=ieee&language=de&count=3';
 
-  https.get(testURL, res => {
-    let testData = [];
-    res.on('data', chunk => {
-      testData.push(chunk);
-    });
-    res.on('end', () => {
-      testData = Buffer.concat(testData).toString();
-      const testJSON = JSON.parse(testData);
-      if (testJSON && testData.includes('Nacht')) {
-        ////////////////////////////////////////////////////////////////////////////
-        // test successfull --> continue with custom-data-type-update
-        ////////////////////////////////////////////////////////////////////////////
-        process.stdin.on('readable', () => {
-          let chunk;
-          while ((chunk = process.stdin.read()) !== null) {
-            data = data + chunk
-          }
-        });
-        process.stdin.on('end', () => {
-          ///////////////////////////////////////
-          // continue with update-routine
-          ///////////////////////////////////////
-          try {
-            let payload = JSON.parse(data)
-            main(payload)
-          } catch (error) {
-            console.error("caught error", error)
-            outputErr(error)
-          }
-        });
-      } else {
-        console.error('Error while interpreting data from k10plus-API.');
-      }
-    });
-  }).on('error', err => {
-    console.error('Error while receiving data from k10plus-API: ', err.message);
-  });
+          ////////////////////////////////////////////////////////////////////////////
+          // availabilityCheck for k10plus-api
+          ////////////////////////////////////////////////////////////////////////////
+          let testURL = 'https://ws.gbv.de/suggest/csl2?query=pica.tit=Nacht&citationstyle=ieee&language=de&count=3';
+
+          https.get(testURL, res => {
+            let testData = [];
+            res.on('data', chunk => {
+              testData.push(chunk);
+            });
+            res.on('end', () => {
+              testData = Buffer.concat(testData).toString();
+              const testJSON = JSON.parse(testData);
+              if (testJSON && testData.includes('Nacht')) {
+                ////////////////////////////////////////////////////////////////////////////
+                // test successfull --> continue with custom-data-type-update
+                ////////////////////////////////////////////////////////////////////////////
+                process.stdin.on('readable', () => {
+                  let chunk;
+                  while ((chunk = process.stdin.read()) !== null) {
+                    data = data + chunk
+                  }
+                });
+                process.stdin.on('end', () => {
+                  ///////////////////////////////////////
+                  // continue with update-routine
+                  ///////////////////////////////////////
+                  try {
+                    let payload = JSON.parse(data)
+                    main(payload)
+                  } catch (error) {
+                    console.error("caught error", error)
+                    outputErr(error)
+                  }
+                });
+              } else {
+                console.error('Error while interpreting data from k10plus-API.');
+              }
+            });
+          }).on('error', err => {
+            console.error('Error while receiving data from k10plus-API: ', err.message);
+          });
+      }).catch(error => {
+        console.error('Es gab einen Fehler beim Laden der Konfiguration:', error);
+      });
+    }
+    else {
+        console.error("kein Accesstoken gefunden");
+    }
+
 })();
