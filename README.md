@@ -33,6 +33,7 @@ As defined in `manifest.master.yml` this datatype can be configured:
        * example: "K10plus-Katalogisierungsdatenbank=k10plus|MEDLINE=medline|"
 
 * mask config
+    * editordisplay: default or condensed (oneline)
     * database_overwrite
         * overwrite database-configuration from schema
 

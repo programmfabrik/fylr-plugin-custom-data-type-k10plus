@@ -25,3 +25,6 @@ custom.data.type.gvk.setting.schema.no_database,Ohne Datenbank,Without database
 custom.data.type.gnd.modal.form.text.database,Datenbank,Database
 server.config.name.system.update_interval_k10plus,k10plus-Update-Einstellungen,k10plus-Update-Settings
 server.config.parameter.system.update_interval_k10plus.days.label,Tage zwischen Updates,Days between updates
+custom.data.type.gvk.config.parameter.mask.editor_display.value.label,Editor-Ansicht,Editor-Display
+custom.data.type.gvk.config.option.mask.editor_display.value.default,Standard,Default
+custom.data.type.gvk.config.option.mask.editor_display.value.condensed,1 Zeile,One-liner

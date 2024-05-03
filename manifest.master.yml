@@ -35,6 +35,11 @@ custom_types:
             value:
               type: text
       mask:
+        - name: editor_display
+          parameters:
+            value:
+              type: select
+              options: ["default", "condensed"]
         - name: database_overwrite
           parameters:
             value:
