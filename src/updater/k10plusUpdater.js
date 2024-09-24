@@ -236,8 +236,7 @@ outputErr = (err2) => {
           ////////////////////////////////////////////////////////////////////////////
           // availabilityCheck for k10plus-api
           ////////////////////////////////////////////////////////////////////////////
-          let testURL = 'https://ws.gbv.de/suggest/csl2?query=pica.tit=Nacht&citationstyle=ieee&language=de&count=3';
-
+          let testURL = 'https://ws.gbv.de/suggest/csl2/?query=pica.tit=Nacht&citationstyle=ieee&language=de&count=3';
           https.get(testURL, res => {
             let testData = [];
             res.on('data', chunk => {
