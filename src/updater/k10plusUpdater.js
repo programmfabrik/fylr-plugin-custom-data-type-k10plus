@@ -7,6 +7,8 @@ const fetch = (...args) => import('node-fetch').then(({
 let databaseLanguages = [];
 let frontendLanguages = [];
 
+let defaultLanguage = 'de';
+
 let info = {}
 
 let access_token = '';
@@ -159,8 +161,16 @@ main = (payload) => {
               newCdata._standard = k10plusUtilities.getStandardFromString(newCdata.conceptName, databaseLanguages);
               // save facet
               newCdata.facetTerm = k10plusUtilities.getFacetTerm(newCdata.conceptURI, newCdata.conceptName, databaseLanguages);
+
               // save frontend language (same as given)
               newCdata.frontendLanguage = originalCdata.frontendLanguage;
+
+              if (!originalCdata?.frontendLanguage?.length == 2) {
+                  originalCdata.frontendLanguage = defaultLanguage;
+              }
+              // save frontend language (same as given or default)
+              newCdata.frontendLanguage = originalCdata.frontendLanguage;
+
               if (hasChanges(payload.objects[index].data, newCdata)) {
                 payload.objects[index].data = newCdata;
               } else {}
@@ -215,6 +225,29 @@ outputErr = (err2) => {
   let data = ""
 
   process.stdin.setEncoding('utf8');
+
+  ////////////////////////////////////////////////////////////////////////////
+  // check if hour-restriction is set
+  ////////////////////////////////////////////////////////////////////////////
+
+  if(info?.config?.plugin?.['custom-data-type-gvk']?.config?.update_k10plus?.restrict_time === true) {
+    let plugin_config = info.config.plugin['custom-data-type-gvk'].config.update_k10plus;
+    // check if hours are configured
+    if(plugin_config?.from_time !== false && plugin_config?.to_time !== false) {
+        const now = new Date();            
+        const hour = now.getHours();
+        // check if hours do not match
+        if(hour < plugin_config.from_time && hour >= plugin_config.to_time) {
+            // exit if hours do not match
+            outputData({
+                "state": {
+                    "theend": 2,
+                    "log": ["hours do not match, cancel update"]
+                }
+            });
+        }
+    }
+  }
 
   access_token = info && info.plugin_user_access_token;
 
