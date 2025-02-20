@@ -270,6 +270,7 @@ outputErr = (err2) => {
           // availabilityCheck for k10plus-api
           ////////////////////////////////////////////////////////////////////////////
           let testURL = 'https://ws.gbv.de/suggest/csl2/?query=pica.tit=Nacht&citationstyle=ieee&language=de&count=3';
+          console.error("Asking for testurl:" + testURL);
           https.get(testURL, res => {
             let testData = [];
             res.on('data', chunk => {
