@@ -41,6 +41,7 @@ build: clean ## clean, compile, copy files to build folder
 				rm -rf src/tmp # clean tmp
 
 				cp l10n/customDataTypek10plus.csv build/$(PLUGIN_NAME)/l10n/customDataTypek10plus.csv # copy l10n
+				tail -n+2 easydb-library/src/commons.l10n.csv >> build/$(PLUGIN_NAME)/l10n/customDataTypek10plus.csv # copy commons
 
 				cp src/webfrontend/css/main.css build/$(PLUGIN_NAME)/webfrontend/customDataTypek10plus.css # copy css
 				cp manifest.master.yml build/$(PLUGIN_NAME)/manifest.yml # copy manifest
