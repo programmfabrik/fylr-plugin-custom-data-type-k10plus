@@ -1,4 +1,4 @@
-class CustomDataTypeGVK extends CustomDataTypeWithCommons
+class CustomDataTypeGVK extends CustomDataTypeWithCommonsAsPlugin
 
     #######################################################################
     # return name of plugin

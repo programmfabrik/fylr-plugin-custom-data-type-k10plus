@@ -2,8 +2,7 @@ ZIP_NAME ?= "customDataTypek10plus.zip"
 PLUGIN_NAME = "custom-data-type-gvk"
 
 # coffescript-files to compile
-COFFEE_FILES = commons.coffee \
-	CustomDataTypek10plus.coffee \
+COFFEE_FILES = CustomDataTypek10plus.coffee \
 	CustomDataTypek10plusFacet.coffee \
 	k10plusUtilities.coffee
 
@@ -25,12 +24,8 @@ build: clean buildinfojson ## clean, compile, copy files to build folder
 				cp build-info.json build/$(PLUGIN_NAME)/build-info.json # build-info
 
 				mkdir -p src/tmp # build code from coffee
-				cp easydb-library/src/commons.coffee src/tmp
 				cp src/webfrontend/*.coffee src/tmp
 				cd src/tmp && coffee -b --compile ${COFFEE_FILES} # bare-parameter is obligatory!
-
-				# first: commons! Important
-				cat src/tmp/commons.js > build/$(PLUGIN_NAME)/webfrontend/customDataTypek10plus.js
 
 				cat src/tmp/CustomDataTypek10plus.js >> build/$(PLUGIN_NAME)/webfrontend/customDataTypek10plus.js
 				cat src/tmp/CustomDataTypek10plusFacet.js >> build/$(PLUGIN_NAME)/webfrontend/customDataTypek10plus.js
@@ -43,7 +38,6 @@ build: clean buildinfojson ## clean, compile, copy files to build folder
 				rm -rf src/tmp # clean tmp
 
 				cp l10n/customDataTypek10plus.csv build/$(PLUGIN_NAME)/l10n/customDataTypek10plus.csv # copy l10n
-				tail -n+2 easydb-library/src/commons.l10n.csv >> build/$(PLUGIN_NAME)/l10n/customDataTypek10plus.csv # copy commons
 
 				cp src/webfrontend/css/main.css build/$(PLUGIN_NAME)/webfrontend/customDataTypek10plus.css # copy css
 				cp manifest.master.yml build/$(PLUGIN_NAME)/manifest.yml # copy manifest

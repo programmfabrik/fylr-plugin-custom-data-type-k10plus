@@ -12,6 +12,8 @@ plugin:
   webfrontend:
     url: customDataTypek10plus.js
     css: customDataTypek10plus.css
+    dependencies:
+      - commons-library
 
 base_url_prefix: "webfrontend"
 
