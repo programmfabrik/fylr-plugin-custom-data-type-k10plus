@@ -24,12 +24,16 @@ custom_types:
         type: string
       conceptURI:
         type: string
+        skipTerms: true
       conceptSource:
         type: string
+        skipTerms: true
       conceptAncestors:
         type: string
+        skipTerms: true
       facetTerm:
         type: text_l10n
+        skipTerms: true
     config:
       schema:
         - name: database
