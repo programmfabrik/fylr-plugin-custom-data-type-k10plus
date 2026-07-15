@@ -6,8 +6,10 @@ plugin:
     de-DE: k10plus-Verknüpfung
     en-US: k10plus-Referencing
   info:
-    de-DE: Stellt Verknüpfungen mit dem k10plus-Verbundkatalog her.
-    en-US: Use for references to entities of the k10plus-Verbundkatalog her.
+    de-DE: |
+      Ergänzt fylr um einen Feldtyp, mit dem sich Datensätze mit Titeln aus dem [k10plus-Verbundkatalog](https://kxp.k10plus.de/) verknüpfen lassen – der gemeinsamen Katalogisierungsdatenbank der Verbünde GBV und SWB. Redakteure durchsuchen den Katalog über den Suggest-Dienst des GBV direkt im Maskenfeld und speichern einen Verweis auf den gewählten Datensatz. Standardmäßig wird die k10plus-Webansicht abgefragt; die Zieldatenbank ist konfigurierbar, und ein nächtlicher Updater hält verknüpfte Einträge aktuell.
+    en-US: |
+      Adds a custom data type for linking records to titles in the [k10plus union catalogue](https://kxp.k10plus.de/), the shared cataloguing database of the GBV and SWB library networks. Editors search the catalogue from a mask field via the GBV suggest service and store a link to the selected record. By default it queries the k10plus web view, but the target database is configurable, and a nightly updater keeps linked entries in sync.
   l10n: l10n/customDataTypek10plus.csv
   webfrontend:
     url: customDataTypek10plus.js
@@ -50,7 +52,7 @@ custom_types:
           parameters:
             value:
               type: text
-              
+
     update:
       plugin_user:
         reference: system:root
