@@ -17,7 +17,7 @@ Choose databases from this List: http://uri.gbv.de/database/)
 
 ## installation
 
-The latest version of this plugin can be found [here](https://github.com/programmfabrik/fylr-plugin-custom-data-type-k10plus/releases/latest/download/customDataTypek10plus.zip).
+The latest version of this plugin can be found [here](https://github.com/programmfabrik/fylr-plugin-custom-data-type-k10plus/releases/latest/download/fylr-plugin-custom-data-type-k10plus.zip).
 
 The ZIP can be downloaded and installed using the plugin manager, or used directly (recommended).
 
