@@ -1,4 +1,7 @@
 .ez5-custom-data-type-gvk {
+  .cui-horizontal-layout-left {
+    flex-shrink: 1;
+  }
   .cui-horizontal-layout-center {
     justify-content: center;
     padding-left: 0px;
