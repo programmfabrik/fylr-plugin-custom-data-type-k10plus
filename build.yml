@@ -11,18 +11,23 @@
 server:
   install:
   - l10n/customDataTypek10plus.csv
+  # assembled server-side files, sources in the order written
+  bundles:
+    - out: updater/k10plusUpdater.js
+      sources:
+      - src/updater/k10plusUpdater.js
+      - webfrontend/k10plusUtilities.coffee
 webfrontend:
-  coffee1:
-  - webfrontend/CustomDataTypek10plus.coffee
-  - webfrontend/CustomDataTypek10plusFacet.coffee
-  - webfrontend/k10plusUtilities.coffee
+  # assembled into plugin.webfrontend.url, in this order:
+  # .coffee is compiled (CoffeeScript 1.x), .scss compiled,
+  # anything else taken verbatim
+  bundles:
+    - sources:
+        - webfrontend/CustomDataTypek10plus.coffee
+        - webfrontend/CustomDataTypek10plusFacet.coffee
+        - webfrontend/k10plusUtilities.coffee
   install:
   - webfrontend/customDataTypek10plus.css
-build:
-  bundles:
-  - out: updater/k10plusUpdater.js
-    sources:
-    - src/updater/k10plusUpdater.js
-    - webfrontend/k10plusUtilities.coffee
-  zip_aliases:
-  - customDataTypek10plus.zip
+
+zip_aliases:
+- customDataTypek10plus.zip
